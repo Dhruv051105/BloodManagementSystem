@@ -1,0 +1,240 @@
+.donation-request-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-card {
+  background: var(--card-color);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.section-label {
+  color: #ef4444;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.page-heading h2 {
+  margin: 0;
+  color: var(--text-color);
+}
+
+.status-pill {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.donation-form {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.donation-form input,
+.donation-form select {
+  flex: 1;
+  min-width: 180px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+  color: var(--text-color);
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+}
+
+.donation-form input:focus,
+.donation-form select:focus {
+  border-color: #ef4444;
+}
+
+.donation-form button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.donation-form button:hover {
+  background: #dc2626;
+}
+
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.request-table thead {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.request-table th,
+.request-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.request-table tbody tr:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.approved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.approve-btn,
+.reject-btn,
+.delete-btn {
+  border: none;
+  padding: 8px 12px;
+  margin: 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.approve-btn {
+  background: #16a34a;
+}
+
+.approve-btn:hover {
+  background: #15803d;
+}
+
+.reject-btn {
+  background: #f59e0b;
+}
+
+.reject-btn:hover {
+  background: #d97706;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+.empty-row {
+  padding: 20px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+
+  .page-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .donation-form {
+    flex-direction: column;
+  }
+
+  .donation-form input,
+  .donation-form select,
+  .donation-form button {
+    width: 100%;
+  }
+
+  .request-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+}
+/* ---------- Dark Mode ---------- */
+
+body.dark .status-pill {
+  background: #1f3b2d;
+  color: #8df5b2;
+}
+
+body.dark .request-table thead {
+  background: #8b1e1e;
+}
+
+body.dark .request-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark .pending {
+  background: #5a4a12;
+  color: #ffe08a;
+}
+
+body.dark .approved {
+  background: #1f3b2d;
+  color: #8df5b2;
+}
+
+body.dark .rejected {
+  background: #5a1f1f;
+  color: #ffb3b3;
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.download-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: #dc2626;
+}

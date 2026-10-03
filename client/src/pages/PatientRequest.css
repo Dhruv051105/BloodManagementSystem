@@ -1,0 +1,207 @@
+.patient-request-container {
+  padding: 20px;
+}
+
+.page-card {
+  background: var(--card-color);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.section-label {
+  color: crimson;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status-pill {
+  background: crimson;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.patient-request-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.patient-request-form input,
+.patient-request-form select {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+color: var(--text-color);
+  border-radius: 6px;
+  outline: none;
+}
+
+.patient-request-form button {
+  background: crimson;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.patient-request-form button:hover {
+  background: darkred;
+}
+
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.request-table th,
+.request-table td {
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  text-align: center;
+}
+
+.request-table th {
+  background: crimson;
+  color: white;
+}
+
+.request-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+}
+
+.status.pending {
+  background: orange;
+}
+
+.status.approved {
+  background: green;
+}
+
+.status.rejected {
+  background: red;
+}
+
+.approve-btn,
+.reject-btn,
+.delete-btn {
+  border: none;
+  color: white;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.approve-btn {
+  background: green;
+}
+
+.reject-btn {
+  background: orange;
+}
+
+.delete-btn {
+  background: crimson;
+}
+
+.approve-btn:hover {
+  background: darkgreen;
+}
+
+.reject-btn:hover {
+  background: darkorange;
+}
+
+.delete-btn:hover {
+  background: darkred;
+}
+
+@media (max-width: 768px) {
+  .patient-request-form {
+    grid-template-columns: 1fr;
+  }
+
+  .request-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+.logged-user {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.logged-user strong {
+  color: #c62828;
+}
+
+/* ---------- Dark Mode ---------- */
+
+body.dark .page-heading h2 {
+  color: var(--text-color);
+}
+
+body.dark .request-table th {
+  background: #8b1e1e;
+}
+
+body.dark .request-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark .status.pending {
+  background: #5a4a12;
+  color: #ffe08a;
+}
+
+body.dark .status.approved {
+  background: #1f3b2d;
+  color: #8df5b2;
+}
+
+body.dark .status.rejected {
+  background: #5a1f1f;
+  color: #ffb3b3;
+}
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.download-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: #dc2626;
+}

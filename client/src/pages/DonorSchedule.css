@@ -1,0 +1,181 @@
+/* Page Layout */
+.donor-schedule-container {
+  max-width: 1400px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.page-card {
+  background: var(--card-color);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Heading */
+.page-heading {
+  margin-bottom: 25px;
+}
+
+.page-heading h2 {
+  font-size: 32px;
+  color: #d32f2f;
+  margin-bottom: 8px;
+}
+
+.page-heading p {
+  color: var(--text-color);
+opacity: 0.8;
+  font-size: 16px;
+}
+
+/* Form */
+.donor-schedule-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.donor-schedule-form input,
+.donor-schedule-form select {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+color: var(--text-color);
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.donor-schedule-form input:focus,
+.donor-schedule-form select:focus {
+  border-color: #e53935;
+}
+
+.donor-schedule-form button {
+  background: #e53935;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.donor-schedule-form button:hover {
+  background: #c62828;
+}
+
+/* Table */
+.donor-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.donor-table th {
+  background: #e53935;
+  color: white;
+  padding: 14px;
+  text-align: center;
+}
+
+.donor-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.donor-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.donor-table tr:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Action Buttons */
+.donor-table button {
+  margin: 3px;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+/* Complete */
+.donor-table button:nth-child(1) {
+  background: #2e7d32;
+}
+
+/* Cancel */
+.donor-table button:nth-child(2) {
+  background: #f57c00;
+}
+
+/* Edit */
+.donor-table button:nth-child(3) {
+  background: #1976d2;
+}
+
+/* Delete */
+.donor-table button:nth-child(4) {
+  background: #d32f2f;
+}
+
+.donor-table button:hover {
+  opacity: 0.9;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .donor-schedule-form {
+    grid-template-columns: 1fr;
+  }
+
+  .donor-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+/* ---------- Dark Mode ---------- */
+
+body.dark .page-heading h2 {
+  color: var(--text-color);
+}
+
+body.dark .donor-table th {
+  background: #8b1e1e;
+}
+
+body.dark .page-card {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.download-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: #dc2626;
+}

@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-color: #f5f7fb;
+  --card-color: #ffffff;
+  --text-color: #222;
+  --input-bg: #ffffff;
+  --border-color: #dcdcdc;
+  --table-header: #e9eef5;
+  --button-color: #c62828;
+  --button-hover: #b71c1c;
+}
+
+body.dark {
+  --bg-color: #121212;
+  --card-color: #1e1e1e;
+  --text-color: #f5f5f5;
+  --input-bg: #2b2b2b;
+  --border-color: #444;
+  --table-header: #2c2c2c;
+  --button-color: #d32f2f;
+  --button-hover: #ef5350;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+select,
+textarea {
+  background: var(--input-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+table,
+th,
+td {
+  border-color: var(--border-color);
+}
+
+th {
+  background: var(--table-header);
+}
+
+button {
+  transition: 0.3s;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
