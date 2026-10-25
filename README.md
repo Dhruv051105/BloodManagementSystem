@@ -526,22 +526,6 @@ Possible future improvements include:
 
 ---
 
-## 📸 Screenshots
-
-Screenshots of the application can be added here.
-
-Example:
-
-```markdown
-![Login Page](screenshots/login.png)
-
-![Dashboard](screenshots/dashboard.png)
-
-![Blood Stock](screenshots/blood-stock.png)
-```
-
----
-
 ## 🌐 Repository
 
 GitHub Repository:
@@ -563,11 +547,3 @@ https://github.com/Dhruv051105
 ## 📄 License
 
 This project was developed for educational and project purposes.
-
----
-
-## ❤️ Acknowledgement
-
-This project was created to demonstrate the development of a full-stack blood management application using modern web technologies.
-
-The project combines frontend development, backend API development, database management, authentication, authorization, and Git-based version control into a single application.
