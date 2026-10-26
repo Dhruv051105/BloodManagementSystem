@@ -62,27 +62,27 @@ function Dashboard() {
       ] = await Promise.all([
 
         // Get blood stock data
-        axios.get("http://localhost:5000/api/blood-stock", {
+        axios.get("https://blood-management-system-api-7p86.onrender.com/api/blood-stock", {
           headers,
         }),
 
         // Get donation request data
-        axios.get("http://localhost:5000/api/donation-requests", {
+        axios.get("https://blood-management-system-api-7p86.onrender.com/api/donation-requests", {
           headers,
         }),
 
         // Get patient request data
-        axios.get("http://localhost:5000/api/patient-requests", {
+        axios.get("https://blood-management-system-api-7p86.onrender.com/api/patient-requests", {
           headers,
         }),
 
         // Get donor schedule data
-        axios.get("http://localhost:5000/api/donor-schedule", {
+        axios.get("https://blood-management-system-api-7p86.onrender.com/api/donor-schedule", {
           headers,
         }),
 
         // Get blood issue data
-        axios.get("http://localhost:5000/api/blood-issues", {
+        axios.get("https://blood-management-system-api-7p86.onrender.com/api/blood-issues", {
           headers,
         }),
       ]);

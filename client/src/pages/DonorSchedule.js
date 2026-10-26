@@ -27,7 +27,7 @@ function DonorSchedule() {
   const fetchSchedules = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/donor-schedule",
+        "https://blood-management-system-api-7p86.onrender.com/api/donor-schedule",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ function DonorSchedule() {
     try {
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/donor-schedule/${editingId}`,
+          `https://blood-management-system-api-7p86.onrender.com/api/donor-schedule/${editingId}`,
           formData,
           {
             headers: {
@@ -81,7 +81,7 @@ function DonorSchedule() {
         toast.success("Schedule updated successfully.");
       } else {
         await axios.post(
-          "http://localhost:5000/api/donor-schedule",
+          "https://blood-management-system-api-7p86.onrender.com/api/donor-schedule",
           formData,
           {
             headers: {
@@ -140,7 +140,7 @@ function DonorSchedule() {
 const updateStatus = async (id, status) => {
   try {
     await axios.put(
-      `http://localhost:5000/api/donor-schedule/${id}`,
+      `https://blood-management-system-api-7p86.onrender.com/api/donor-schedule/${id}`,
       { status },
       {
         headers: {
@@ -169,7 +169,7 @@ const deleteSchedule = async (id) => {
 
   try {
     await axios.delete(
-      `http://localhost:5000/api/donor-schedule/${id}`,
+      `https://blood-management-system-api-7p86.onrender.com/api/donor-schedule/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

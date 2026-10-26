@@ -104,7 +104,7 @@ function Register() {
 
       // Send POST request to the registration API
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://blood-management-system-api-7p86.onrender.com/api/auth/register",
         {
           // Send the user's name
           name: formData.name,

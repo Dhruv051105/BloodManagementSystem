@@ -21,7 +21,7 @@ import "./BloodStock.css";
 
 // Base URL of the Blood Stock API
 // All GET, POST, PUT and DELETE requests use this URL
-const API_URL = "http://localhost:5000/api/blood-stock";
+const API_URL = "https://blood-management-system-api-7p86.onrender.com/api/blood-stock";
 
 
 const BloodStock = () => {

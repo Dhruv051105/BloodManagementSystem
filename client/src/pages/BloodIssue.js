@@ -26,7 +26,7 @@ function BloodIssue() {
   const fetchIssues = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/blood-issues",
+        "https://blood-management-system-api-7p86.onrender.com/api/blood-issues",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ function BloodIssue() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/blood-issues",
+        "https://blood-management-system-api-7p86.onrender.com/api/blood-issues",
         formData,
         {
           headers: {
@@ -108,7 +108,7 @@ function BloodIssue() {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/blood-issues/${id}`,
+        `https://blood-management-system-api-7p86.onrender.com/api/blood-issues/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

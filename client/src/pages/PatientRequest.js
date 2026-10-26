@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "./PatientRequest.css";
 
-const API_URL = "http://localhost:5000/api/patient-requests";
+const API_URL = "https://blood-management-system-api-7p86.onrender.com/api/patient-requests";
 
 const PatientRequest = () => {
   const [requests, setRequests] = useState([]);
