@@ -39,7 +39,7 @@ import AuthLayout from "./layouts/AuthLayout";
 // Import ProtectedRoute
 // It checks whether the user is allowed to access protected pages
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import autoTable from "jspdf-autotable";
 
 function App() {
 

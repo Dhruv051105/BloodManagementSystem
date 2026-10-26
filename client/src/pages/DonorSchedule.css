@@ -1,32 +1,64 @@
-/* Page Layout */
+
+/* Donor Schedule Page */
 .donor-schedule-container {
+  width: 100%;
   max-width: 1400px;
-  margin: 30px auto;
+  min-width: 0;
+  margin: 20px auto;
   padding: 20px;
 }
 
-.page-card {
+.donor-schedule-card {
+  width: 100%;
+  min-width: 0;
   background: var(--card-color);
+  color: var(--text-color);
   border-radius: 15px;
   padding: 30px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Heading */
-.page-heading {
+.donor-schedule-card .page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 25px;
 }
 
-.page-heading h2 {
-  font-size: 32px;
+.donor-schedule-card .page-heading h2 {
   color: #d32f2f;
+  font-size: 32px;
   margin-bottom: 8px;
+  line-height: 1.3;
 }
 
-.page-heading p {
+.donor-schedule-card .page-heading p {
   color: var(--text-color);
-opacity: 0.8;
+  opacity: 0.8;
   font-size: 16px;
+  line-height: 1.5;
+}
+
+.donor-schedule-card .page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.donor-schedule-card .download-btn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.donor-schedule-card .download-btn:hover {
+  background: #c62828;
 }
 
 /* Form */
@@ -34,120 +66,179 @@ opacity: 0.8;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
+  width: 100%;
+  min-width: 0;
   margin-bottom: 25px;
 }
 
 .donor-schedule-form input,
 .donor-schedule-form select {
+  width: 100%;
+  min-width: 0;
   padding: 12px;
   border: 1px solid var(--border-color);
   background: var(--input-bg);
-color: var(--text-color);
+  color: var(--text-color);
   border-radius: 8px;
   font-size: 15px;
-  outline: none;
-  transition: 0.3s;
 }
 
 .donor-schedule-form input:focus,
 .donor-schedule-form select:focus {
+  outline: 1px solid #e53935;
   border-color: #e53935;
 }
 
 .donor-schedule-form button {
+  min-height: 44px;
   background: #e53935;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 8px;
   padding: 12px;
   cursor: pointer;
   font-size: 15px;
   font-weight: 600;
-  transition: 0.3s;
 }
 
 .donor-schedule-form button:hover {
   background: #c62828;
 }
 
-/* Table */
+.donor-schedule-form .cancel-edit-btn {
+  background: #64748b;
+}
+
+.donor-schedule-form .cancel-edit-btn:hover {
+  background: #475569;
+}
+
+.donor-table-divider {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 20px 0 12px;
+}
+
+.donor-table-hint {
+  display: none;
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+/* Table scroll stays inside the card */
+.donor-table-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  border-radius: 8px;
+}
+
 .donor-table {
   width: 100%;
+  min-width: 760px;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin: 0;
+  color: var(--text-color);
 }
 
 .donor-table th {
   background: #e53935;
-  color: white;
-  padding: 14px;
+  color: #fff;
+  padding: 12px 10px;
   text-align: center;
+  white-space: nowrap;
 }
 
 .donor-table td {
-  padding: 12px;
+  padding: 10px;
   border-bottom: 1px solid var(--border-color);
   text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
-.donor-table tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.03);
+.donor-table tbody tr:hover {
+  background: rgba(229, 57, 53, 0.05);
 }
 
-.donor-table tr:hover {
-  background: rgba(255, 255, 255, 0.06);
+/* Status */
+.donor-status {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #fff3cd;
+  color: #856404;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-/* Action Buttons */
-.donor-table button {
-  margin: 3px;
-  padding: 7px 12px;
+.donor-status.completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.donor-status.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Keep action buttons together on one line */
+.donor-actions-cell {
+  min-width: 290px;
+}
+
+.donor-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.donor-actions button {
+  flex: 0 0 auto;
   border: none;
   border-radius: 6px;
+  padding: 8px 9px;
+  color: #fff;
   cursor: pointer;
-  color: white;
-  font-size: 13px;
-  transition: 0.3s;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
-/* Complete */
-.donor-table button:nth-child(1) {
+.donor-actions .complete-btn {
   background: #2e7d32;
 }
 
-/* Cancel */
-.donor-table button:nth-child(2) {
+.donor-actions .cancel-btn {
   background: #f57c00;
 }
 
-/* Edit */
-.donor-table button:nth-child(3) {
+.donor-actions .edit-btn {
   background: #1976d2;
 }
 
-/* Delete */
-.donor-table button:nth-child(4) {
+.donor-actions .delete-btn {
   background: #d32f2f;
 }
 
-.donor-table button:hover {
-  opacity: 0.9;
+.donor-actions button:hover {
+  filter: brightness(0.92);
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .donor-schedule-form {
-    grid-template-columns: 1fr;
-  }
-
-  .donor-table {
-    display: block;
-    overflow-x: auto;
-  }
+body.dark .donor-schedule-card {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
-/* ---------- Dark Mode ---------- */
 
-body.dark .page-heading h2 {
+body.dark .donor-schedule-card .page-heading h2 {
   color: var(--text-color);
 }
 
@@ -155,27 +246,90 @@ body.dark .donor-table th {
   background: #8b1e1e;
 }
 
-body.dark .page-card {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+body.dark .donor-status.completed {
+  background: #1f3b2d;
+  color: #8df5b2;
 }
 
-.page-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+body.dark .donor-status.cancelled {
+  background: #5a1f1f;
+  color: #ffb3b3;
 }
 
-.download-btn {
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
+/* Tablet and mobile */
+@media (max-width: 768px) {
+  .donor-schedule-container {
+    margin: 12px auto;
+    padding: 10px;
+  }
+
+  .donor-schedule-card {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  .donor-schedule-card .page-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .donor-schedule-card .page-heading h2 {
+    font-size: 25px;
+  }
+
+  .donor-schedule-card .page-heading p {
+    font-size: 14px;
+  }
+
+  .donor-schedule-form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .donor-schedule-form input,
+  .donor-schedule-form select,
+  .donor-schedule-form button {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .donor-schedule-card .download-btn {
+    min-height: 40px;
+  }
+
+  .donor-table-hint {
+    display: block;
+  }
+
+  .donor-table {
+    min-width: 760px;
+  }
+
+  .donor-table th,
+  .donor-table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  .donor-actions-cell {
+    min-width: 290px;
+  }
 }
 
-.download-btn:hover {
-  background: #dc2626;
+/* Small phones */
+@media (max-width: 420px) {
+  .donor-schedule-container {
+    padding: 8px;
+  }
+
+  .donor-schedule-card {
+    padding: 14px 12px;
+  }
+
+  .donor-schedule-card .page-heading h2 {
+    font-size: 22px;
+  }
 }

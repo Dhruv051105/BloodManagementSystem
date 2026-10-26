@@ -1,9 +1,20 @@
+
+/* Donation Request Page */
+* {
+  box-sizing: border-box;
+}
+
 .donation-request-container {
+  width: 100%;
   max-width: 1200px;
+  min-width: 0;
   margin: 0 auto;
 }
 
 .page-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   background: var(--card-color);
   padding: 30px;
   border-radius: 16px;
@@ -14,6 +25,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   margin-bottom: 25px;
 }
 
@@ -27,6 +39,7 @@
 .page-heading h2 {
   margin: 0;
   color: var(--text-color);
+  overflow-wrap: anywhere;
 }
 
 .status-pill {
@@ -37,17 +50,43 @@
   font-weight: 600;
 }
 
+.page-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.download-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: #dc2626;
+}
+
+/* Donation Form */
 .donation-form {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
   margin-bottom: 30px;
 }
 
 .donation-form input,
 .donation-form select {
-  flex: 1;
-  min-width: 180px;
+  flex: 1 1 180px;
+  min-width: 0;
+  max-width: 100%;
   padding: 12px;
   border: 1px solid var(--border-color);
   background: var(--input-bg);
@@ -77,11 +116,21 @@
   background: #dc2626;
 }
 
+/* Request Table */
+.request-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+}
+
 .request-table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .request-table thead {
@@ -100,7 +149,9 @@
   background: rgba(239, 68, 68, 0.08);
 }
 
+/* Request Status */
 .status {
+  display: inline-block;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 13px;
@@ -122,6 +173,7 @@
   color: #991b1b;
 }
 
+/* Action Buttons */
 .approve-btn,
 .reject-btn,
 .delete-btn {
@@ -164,32 +216,7 @@
   color: var(--text-color);
 }
 
-@media (max-width: 768px) {
-
-  .page-heading {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .donation-form {
-    flex-direction: column;
-  }
-
-  .donation-form input,
-  .donation-form select,
-  .donation-form button {
-    width: 100%;
-  }
-
-  .request-table {
-    display: block;
-    overflow-x: auto;
-  }
-
-}
-/* ---------- Dark Mode ---------- */
-
+/* Dark Mode */
 body.dark .status-pill {
   background: #1f3b2d;
   color: #8df5b2;
@@ -218,23 +245,98 @@ body.dark .rejected {
   color: #ffb3b3;
 }
 
-.page-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* Tablet and Mobile */
+@media (max-width: 768px) {
+  .donation-request-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .page-card {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .page-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .page-heading h2 {
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+
+  .page-actions {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .download-btn {
+    padding: 10px 14px;
+  }
+
+  .donation-form {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .donation-form input,
+  .donation-form select,
+  .donation-form button {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  /* Keep the table readable; scroll it inside its wrapper */
+  .request-table {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .request-table th,
+  .request-table td {
+    padding: 12px;
+    white-space: nowrap;
+  }
+
+  .approve-btn,
+  .reject-btn,
+  .delete-btn {
+    min-height: 36px;
+    padding: 8px 10px;
+  }
+
+  .status {
+    white-space: nowrap;
+  }
 }
 
-.download-btn {
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
-}
+/* Small Phones */
+@media (max-width: 420px) {
+  .page-card {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
 
-.download-btn:hover {
-  background: #dc2626;
+  .page-heading h2 {
+    font-size: 1.25rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+  }
+
+  .request-table th,
+  .request-table td {
+    padding: 10px;
+    font-size: 12px;
+  }
 }

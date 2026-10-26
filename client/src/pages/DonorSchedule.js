@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -5,9 +6,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "./DonorSchedule.css";
 
+const API_URL =
+  "https://blood-management-system-api-7p86.onrender.com/api/donor-schedule";
+
 function DonorSchedule() {
   const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
+
+  let user = null;
+  try {
+    user = JSON.parse(localStorage.getItem("user"));
+  } catch {
+    user = null;
+  }
 
   const [donors, setDonors] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -20,112 +30,90 @@ function DonorSchedule() {
     appointmentTime: "",
   });
 
-  // ===========================
-  // Fetch All Schedules
-  // ===========================
-
   const fetchSchedules = async () => {
     try {
-      const res = await axios.get(
-        "https://blood-management-system-api-7p86.onrender.com/api/donor-schedule",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.get(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setDonors(res.data.donors);
-
+      setDonors(res.data.donors || []);
     } catch (error) {
       toast.error(
-  error.response?.data?.message ||
-  "Error loading schedules."
-);
+        error.response?.data?.message || "Error loading schedules."
+      );
     }
   };
 
   useEffect(() => {
     fetchSchedules();
+    // Load schedules when this page mounts.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ===========================
-  // Handle Form Input
-  // ===========================
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-    // ===========================
-  // Create / Update Schedule
-  // ===========================
+
+  const resetForm = () => {
+    setFormData({
+      donorName: "",
+      bloodType: "",
+      contact: "",
+      appointmentDate: "",
+      appointmentTime: "",
+    });
+    setEditingId(null);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       if (editingId) {
-        await axios.put(
-          `https://blood-management-system-api-7p86.onrender.com/api/donor-schedule/${editingId}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await axios.put(`${API_URL}/${editingId}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         toast.success("Schedule updated successfully.");
       } else {
-        await axios.post(
-          "https://blood-management-system-api-7p86.onrender.com/api/donor-schedule",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await axios.post(API_URL, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         toast.success("Schedule created successfully.");
       }
 
-      setFormData({
-        donorName: "",
-        bloodType: "",
-        contact: "",
-        appointmentDate: "",
-        appointmentTime: "",
-      });
-
-      setEditingId(null);
-
-      fetchSchedules();
-
+      resetForm();
+      await fetchSchedules();
     } catch (error) {
       toast.error(
-  error.response?.data?.message ||
-  "Something went wrong."
-);
+        error.response?.data?.message || "Something went wrong."
+      );
     }
   };
-
-  // ===========================
-  // Edit Schedule
-  // ===========================
 
   const handleEdit = (donor) => {
     setEditingId(donor._id);
 
     setFormData({
-      donorName: donor.donorName,
-      bloodType: donor.bloodType,
-      contact: donor.contact,
-      appointmentDate: donor.appointmentDate.split("T")[0],
-      appointmentTime: donor.appointmentTime,
+      donorName: donor.donorName || "",
+      bloodType: donor.bloodType || "",
+      contact: donor.contact || "",
+      appointmentDate: donor.appointmentDate
+        ? donor.appointmentDate.split("T")[0]
+        : "",
+      appointmentTime: donor.appointmentTime || "",
     });
 
     window.scrollTo({
@@ -133,134 +121,115 @@ function DonorSchedule() {
       behavior: "smooth",
     });
   };
-  // ===========================
-// Update Status
-// ===========================
 
-const updateStatus = async (id, status) => {
-  try {
-    await axios.put(
-      `https://blood-management-system-api-7p86.onrender.com/api/donor-schedule/${id}`,
-      { status },
-      {
+  const updateStatus = async (id, status) => {
+    try {
+      await axios.put(
+        `${API_URL}/${id}`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success(
+        `Donation ${status.toLowerCase()} successfully.`
+      );
+
+      await fetchSchedules();
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Unable to update status."
+      );
+    }
+  };
+
+  const deleteSchedule = async (id) => {
+    if (
+      !window.confirm("Are you sure you want to delete this schedule?")
+    ) {
+      return;
+    }
+
+    try {
+      await axios.delete(`${API_URL}/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      });
+
+      toast.success("Schedule deleted successfully.");
+      await fetchSchedules();
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Unable to delete schedule."
+      );
+    }
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Donor Schedule Report", 14, 20);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [[
+        "#",
+        "Donor",
+        "Blood Group",
+        "Date",
+        "Time",
+        "Contact",
+        "Status",
+      ]],
+      body: donors.map((donor, index) => [
+        index + 1,
+        donor.donorName,
+        donor.bloodType,
+        new Date(donor.appointmentDate).toLocaleDateString(),
+        donor.appointmentTime,
+        donor.contact,
+        donor.status,
+      ]),
+    });
+
+    const finalY = doc.lastAutoTable.finalY;
+
+    doc.text(`Total Schedules: ${donors.length}`, 14, finalY + 15);
+    doc.text(
+      `Generated On: ${new Date().toLocaleString()}`,
+      14,
+      finalY + 25
     );
 
-    toast.success(`Donation ${status.toLowerCase()} successfully.`);
-    fetchSchedules();
-  } catch (error) {
-    toast.error(
-  error.response?.data?.message ||
-  "Unable to update status."
-);
-  }
-};
-// ===========================
-// Delete Schedule
-// ===========================
+    doc.save("Donor_Schedule_Report.pdf");
+  };
 
-const deleteSchedule = async (id) => {
-  if (!window.confirm("Are you sure you want to delete this schedule?")) {
-    return;
-  }
-
-  try {
-    await axios.delete(
-      `https://blood-management-system-api-7p86.onrender.com/api/donor-schedule/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    toast.success("Schedule deleted successfully.");
-    fetchSchedules();
-  } catch (error) {
-    toast.error(
-  error.response?.data?.message ||
-  "Unable to delete schedule."
-);
-  }
-};
-
-const generatePDF = () => {
-  const doc = new jsPDF();
-
-  doc.setFontSize(18);
-  doc.text("Donor Schedule Report", 14, 20);
-
-  autoTable(doc, {
-    startY: 30,
-    head: [[
-      "#",
-      "Donor",
-      "Blood Group",
-      "Date",
-      "Time",
-      "Contact",
-      "Status",
-    ]],
-    body: donors.map((donor, index) => [
-      index + 1,
-      donor.donorName,
-      donor.bloodType,
-      new Date(donor.appointmentDate).toLocaleDateString(),
-      donor.appointmentTime,
-      donor.contact,
-      donor.status,
-    ]),
-  });
-
-  doc.text(
-    `Total Schedules: ${donors.length}`,
-    14,
-    doc.lastAutoTable.finalY + 15
-  );
-
-  doc.text(
-    `Generated On: ${new Date().toLocaleString()}`,
-    14,
-    doc.lastAutoTable.finalY + 25
-  );
-
-  doc.save("Donor_Schedule_Report.pdf");
-};
-  
-    return (
+  return (
     <div className="donor-schedule-container">
-
-      <div className="page-card">
-
+      <div className="page-card donor-schedule-card">
         <div className="page-heading">
+          <div>
+            <h2>Donor Schedule</h2>
+            <p>Logged in as: {user?.role || "User"}</p>
+          </div>
 
-  <div>
-    <h2>Donor Schedule</h2>
-    <p>Logged in as: {user?.role}</p>
-  </div>
+          <div className="page-actions">
+            <button
+              type="button"
+              className="download-btn"
+              onClick={generatePDF}
+            >
+              Download PDF
+            </button>
+          </div>
+        </div>
 
-  <div className="page-actions">
-
-    <button
-      type="button"
-      className="download-btn"
-      onClick={generatePDF}
-    >
-      Download PDF
-    </button>
-
-  </div>
-
-</div>
-
-        <form
-          className="donor-schedule-form"
-          onSubmit={handleSubmit}
-        >
-
+        <form className="donor-schedule-form" onSubmit={handleSubmit}>
           <input
             type="text"
             name="donorName"
@@ -316,120 +285,115 @@ const generatePDF = () => {
             {editingId ? "Update Schedule" : "Create Schedule"}
           </button>
 
+          {editingId && (
+            <button
+              type="button"
+              className="cancel-edit-btn"
+              onClick={resetForm}
+            >
+              Cancel Editing
+            </button>
+          )}
         </form>
 
-        <hr />
+        <hr className="donor-table-divider" />
 
-        <table className="donor-table">
+        <p className="donor-table-hint">
+          On mobile, swipe the table horizontally to view all columns.
+        </p>
 
-          <thead>
-            <tr>
-              <th>Donor</th>
-              <th>Blood</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Contact</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-
-            {donors.length === 0 ? (
-
+        <div className="donor-table-wrapper">
+          <table className="donor-table">
+            <thead>
               <tr>
-                <td colSpan="7">
-                  No schedules found.
-                </td>
+                <th>Donor</th>
+                <th>Blood</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Contact</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
+            </thead>
 
-            ) : (
-
-              donors.map((donor) => (
-
-                <tr key={donor._id}>
-
-                  <td>{donor.donorName}</td>
-
-                  <td>{donor.bloodType}</td>
-
-                  <td>
-                    {new Date(
-                      donor.appointmentDate
-                    ).toLocaleDateString()}
-                  </td>
-
-                  <td>{donor.appointmentTime}</td>
-
-                  <td>{donor.contact}</td>
-
-                  <td>{donor.status}</td>
-
-                  <td>
-
-                    {donor.status === "Pending" && (
-                      <>
-                        <button
-                        type="button"
-                          onClick={() =>
-                            updateStatus(
-                              donor._id,
-                              "Completed"
-                            )
-                          }
-                        >
-                          Complete
-                        </button>
-
-                        <button
-                        type="button"
-                          onClick={() =>
-                            updateStatus(
-                              donor._id,
-                              "Cancelled"
-                            )
-                          }
-                        >
-                          Cancel
-                        </button>
-
-                        <button
-                        type="button"
-                          onClick={() =>
-                            handleEdit(donor)
-                          }
-                        >
-                          Edit
-                        </button>
-                      </>
-                    )}
-
-                    {user?.role === "Admin" && (
-                      <button
-                      type="button"
-                        onClick={() =>
-                          deleteSchedule(donor._id)
-                        }
-                      >
-                        Delete
-                      </button>
-                    )}
-
-                  </td>
-
+            <tbody>
+              {donors.length === 0 ? (
+                <tr>
+                  <td colSpan="7">No schedules found.</td>
                 </tr>
+              ) : (
+                donors.map((donor) => (
+                  <tr key={donor._id}>
+                    <td>{donor.donorName}</td>
+                    <td>{donor.bloodType}</td>
+                    <td>
+                      {new Date(
+                        donor.appointmentDate
+                      ).toLocaleDateString()}
+                    </td>
+                    <td>{donor.appointmentTime}</td>
+                    <td>{donor.contact}</td>
+                    <td>
+                      <span
+                        className={`donor-status ${String(
+                          donor.status || "Pending"
+                        ).toLowerCase()}`}
+                      >
+                        {donor.status || "Pending"}
+                      </span>
+                    </td>
+                    <td className="donor-actions-cell">
+                      <div className="donor-actions">
+                        {donor.status === "Pending" && (
+                          <>
+                            <button
+                              type="button"
+                              className="complete-btn"
+                              onClick={() =>
+                                updateStatus(donor._id, "Completed")
+                              }
+                            >
+                              Complete
+                            </button>
 
-              ))
+                            <button
+                              type="button"
+                              className="cancel-btn"
+                              onClick={() =>
+                                updateStatus(donor._id, "Cancelled")
+                              }
+                            >
+                              Cancel
+                            </button>
 
-            )}
+                            <button
+                              type="button"
+                              className="edit-btn"
+                              onClick={() => handleEdit(donor)}
+                            >
+                              Edit
+                            </button>
+                          </>
+                        )}
 
-          </tbody>
-
-        </table>
-
+                        {user?.role === "Admin" && (
+                          <button
+                            type="button"
+                            className="delete-btn"
+                            onClick={() => deleteSchedule(donor._id)}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-
     </div>
   );
 }
